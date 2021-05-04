@@ -10,13 +10,18 @@
     * - Author          : Admin
     * - Modification    : 
 **/
-import React from 'react';
+import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {useAlert} from 'react-alert';
 import {InstanceAuth} from '../../services/BaseInstance';
 import CustomInput from '../atoms/inputs/CustomInput';
+import BlockUi from "react-block-ui";
+
 
 function CurrencyModal({show, handleClose}) {
+
+  const [blockCurrency, setBlockCurrency] = useState(false);
+
   const showHideClassName = show ? 'modal is-active' : 'modal';
   const alert = useAlert();
 
@@ -46,6 +51,7 @@ function CurrencyModal({show, handleClose}) {
   };
 
   const onSubmit = async (data, e) => {
+    setBlockCurrency(true)
     e.target.reset();
     const userSession = localStorage.getItem('user');
     const searchWallet = await InstanceAuth.get(
@@ -55,9 +61,11 @@ function CurrencyModal({show, handleClose}) {
     if (searchWallet.status === 200) {
       const createResult = await InstanceAuth.post('currency/', data);
       if (createResult.status === 201) {
+        setBlockCurrency(false)
         successCreateCurrency();
         handleClose();
       } else {
+        setBlockCurrency(false)
         handleClose();
       }
     } else {
@@ -71,6 +79,7 @@ function CurrencyModal({show, handleClose}) {
       <div className="modal-background" onClick={handleClose} />
       <div className="modal-card">
         <form onSubmit={handleSubmit(onSubmit)} className="m-3">
+        <BlockUi blocking={blockCurrency} message="Creating currency, please wait...">
           <header className="modal-card-head">
             <p className="modal-card-title">Create Criptocurrency</p>
             <button
@@ -128,6 +137,7 @@ function CurrencyModal({show, handleClose}) {
               Cancel
             </button>
           </footer>
+          </BlockUi>
         </form>
       </div>
     </div>
