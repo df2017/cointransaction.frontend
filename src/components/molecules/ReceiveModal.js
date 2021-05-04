@@ -10,27 +10,22 @@
  * - Author          : Admin
  * - Modification    :
  **/
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {InstanceAuth} from '../../services/BaseInstance';
 
 function ReceiveModal({show, handleClose, currency}) {
   const showHideClassName = show ? 'modal is-active' : 'modal';
   const [address, setAddress] = useState('');
 
-  async function searchAddress() {
-    const userSession = localStorage.getItem('user');
-    const user = JSON.parse(userSession)[0].id;
-    const addressResult = await InstanceAuth.get(
-      `currency/?symbol=${currency}&owner=${user}`
-    );
-    if (addressResult.status === 200) {
-      setAddress(addressResult.data.results[0].address);
+  const userSession = localStorage.getItem('user');
+  const user = JSON.parse(userSession)[0].id;
+  InstanceAuth.get(`currency/?symbol=${currency}&owner=${user}`).then(
+    (resp) => {
+      if (resp.status === 200) {
+        setAddress(resp.data.results[0].address);
+      }
     }
-  }
-
-  useEffect(() => {
-    searchAddress();
-  }, []);
+  );
 
   return (
     <div className={showHideClassName}>

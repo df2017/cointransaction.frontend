@@ -12,10 +12,11 @@
 **/
 import React from "react";
 
-function ButtonSend() {
+function ButtonSend(propsButton) {
 
   return (
-    <button className="button is-black is-outlined is-rounded is-small is-fullwidth m-1">Send</button>
+    <button className="button is-black is-outlined is-rounded is-small is-fullwidth m-1"
+      {...propsButton}>Send</button>
   );
 }
 

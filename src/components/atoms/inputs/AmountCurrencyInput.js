@@ -2,30 +2,29 @@
     * @description      : 
     * @author           : Admin
     * @group            : 
-    * @created          : 03/05/2021 - 01:16:25
+    * @created          : 02/05/2021 - 23:46:40
     * 
     * MODIFICATION LOG
     * - Version         : 1.0.0
-    * - Date            : 03/05/2021
+    * - Date            : 02/05/2021
     * - Author          : Admin
     * - Modification    : 
 **/
 import React from "react";
 
-function AmountInput({event, register}) {
+function AmountCurrencyInput({event, register}) {
   return (
     <>
       <input
         className="input is-normal"
-        type="number" 
-        step="0.00000001"
-        placeholder="Enter an amount"
-        name="amount"
+        type="number"
+        placeholder="0.00000000"
+        name="amountCurrency"
         {...register}
-        onChange={event}
+        value={event}
       />
     </>
   );
 }
 
-export default AmountInput;
+export default AmountCurrencyInput;

@@ -11,9 +11,11 @@
  * - Modification    :
  **/
 import React, {useState, useEffect} from 'react';
-import CurrencyBlock from '../molecules/CurrencyBlock';
+import {CurrencyBlock} from '../molecules/CurrencyBlock';
 import CurrencyModal from '../molecules/CurrencyModal';
 import {InstanceAuth} from '../../services/BaseInstance';
+
+
 
 function WalletSection() {
   //const elements = ['one', 'two', 'three'];
@@ -30,14 +32,12 @@ function WalletSection() {
       const searchCurrencies = await InstanceAuth.get(
         `connector/?id_wallet=${searchWallet.data.results[0].id}`
       );
-      console.log('searchCurrencies', searchCurrencies);
 
       if (searchCurrencies.status === 200) {
         setItemList(searchCurrencies.data.results)
       }
     }
   }
-
   
   useEffect(() => {
     chargeCurrencies()
@@ -45,10 +45,9 @@ function WalletSection() {
 
   for (const [index, value] of itemList.entries()) {
     items.push(
-      <CurrencyBlock 
+      <CurrencyBlock key={index.toString()}
         nameCurrency={value.id_currency.name}
         symbol={value.id_currency.symbol}
-        amount={'0.00000000'}
       />
     );
   }
@@ -58,7 +57,6 @@ function WalletSection() {
     setShow(false)};
   const handleShow = () => setShow(true);
 
-  console.log(items);
   return (
     <article className="message is-warning">
       <div className="message-header">

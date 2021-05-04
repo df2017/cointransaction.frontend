@@ -12,10 +12,11 @@
 **/
 import React from "react";
 
-function BuyButton() {
+function BuyButton(propsButton) {
 
   return (
-    <button className="button is-danger is-outlined is-rounded is-small is-fullwidth m-1">Pay</button>
+    <button className="button is-danger is-outlined is-rounded is-small is-fullwidth m-1"
+    {...propsButton}>Pay</button>
   );
 }
 

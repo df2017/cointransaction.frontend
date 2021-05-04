@@ -12,7 +12,7 @@
  **/
 import React from 'react';
 import {useForm} from 'react-hook-form';
-import AmountInput from '../atoms/inputs/AmountInput';
+import AmountDepositInput from '../atoms/inputs/AmountDepositInput';
 import {useAlert} from 'react-alert';
 import {InstanceAuth} from '../../services/BaseInstance';
 import {$amount} from '../organisms/AccountSection';
@@ -88,7 +88,7 @@ function AccountModal({show, handleClose}) {
           <section className="modal-card-body">
             <div className="field">
               <label className="label">Amount</label>
-              <AmountInput
+              <AmountDepositInput
                 register={register('amount', {
                   required: {
                     value: true,
