@@ -20,7 +20,6 @@ function TransactionInTable() {
   useEffect(() => {
     InstanceAuth.get('transactionsin/').then((resp) => {
       if (resp.status === 200) {
-        console.log(resp.data.results)
         SetItemIn(resp.data.results);
       }
     });
