@@ -16,7 +16,7 @@ function BuyButton(propsButton) {
 
   return (
     <button className="button is-danger is-outlined is-rounded is-small is-fullwidth m-1"
-    {...propsButton}>Pay</button>
+    {...propsButton}>Buy</button>
   );
 }
 

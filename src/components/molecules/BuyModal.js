@@ -18,9 +18,12 @@ import {$amount} from '../organisms/AccountSection';
 import AmountInput from '../atoms/inputs/AmountInput';
 import AmountCurrencyInput from '../atoms/inputs/AmountCurrencyInput';
 import {AmountTotalCurrency} from '../molecules/CurrencyBlock';
-
+import BlockUi from "react-block-ui";
 
 function BuyModal({show, handleClose, currency}) {
+
+  const [blockBuy, setBlockBuy] = useState(false);
+
   const showHideClassName = show ? 'modal is-active' : 'modal';
   const alert = useAlert();
 
@@ -57,6 +60,7 @@ function BuyModal({show, handleClose, currency}) {
   };
 
   const onSubmit = async (data, e) => {
+    setBlockBuy(true)
     data.amountCurrency = currencyValue;
     e.target.reset();
     setCurrencyValue(0);
@@ -113,9 +117,11 @@ function BuyModal({show, handleClose, currency}) {
             if (resultCreateTxOut.status === 201) {
               AmountTotalCurrency(addressResult.data.results[0].address, currency)
               $amount.next(data.amount);
+              setBlockBuy(false)
               successBuyCurrency();
               handleClose();
             } else {
+              setBlockBuy(false)
               alertBuyCurrency();
               handleClose();
             }
@@ -138,6 +144,7 @@ function BuyModal({show, handleClose, currency}) {
       <div className="modal-background" onClick={handleClose} />
       <div className="modal-card">
         <form onSubmit={handleSubmit(onSubmit)} className="m-3">
+        <BlockUi blocking={blockBuy} message="Buying, please wait...">
           <header className="modal-card-head">
             <p className="modal-card-title">Buy Criptocurrency</p>
             <button
@@ -189,6 +196,7 @@ function BuyModal({show, handleClose, currency}) {
               Cancel
             </button>
           </footer>
+          </BlockUi>
         </form>
       </div>
     </div>
