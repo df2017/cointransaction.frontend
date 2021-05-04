@@ -1,3 +1,15 @@
+/**
+    * @description      : 
+    * @author           : Admin
+    * @group            : 
+    * @created          : 04/05/2021 - 15:01:46
+    * 
+    * MODIFICATION LOG
+    * - Version         : 1.0.0
+    * - Date            : 04/05/2021
+    * - Author          : Admin
+    * - Modification    : 
+**/
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
@@ -11,7 +23,7 @@ import Login from "../../services/LoginService";
 import auth from "../Auth";
 import { useAlert } from "react-alert";
 import BlockUi from "react-block-ui";
-import 'react-block-ui/style.css';
+
 
 function LoginForm() {
 

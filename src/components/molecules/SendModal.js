@@ -10,13 +10,15 @@
  * - Author          : Admin
  * - Modification    :
  **/
-import React from 'react';
+import React, {useState} from 'react';
 import {InstanceAuth} from '../../services/BaseInstance';
 import AmountInput from '../atoms/inputs/AmountInput';
 import CustomInput from '../atoms/inputs/CustomInput';
 import {useForm} from 'react-hook-form';
 import {useAlert} from 'react-alert';
 import {AmountTotalCurrency} from '../molecules/CurrencyBlock';
+import BlockUi from "react-block-ui";
+
 
 const UpdateTxUnspent = async (address, coin, txIn) => {
   const body = {
@@ -32,6 +34,9 @@ const UpdateTxUnspent = async (address, coin, txIn) => {
 };
 
 function SendModal({show, handleClose, currency}) {
+
+  const [blockSend, setBlockSend] = useState(false);
+
   const showHideClassName = show ? 'modal is-active' : 'modal';
   const alert = useAlert();
 
@@ -60,6 +65,7 @@ function SendModal({show, handleClose, currency}) {
   };
 
   const onSubmit = async (data, e) => {
+    setBlockSend(true)
     e.target.reset();
 
     const userSession = localStorage.getItem('user');
@@ -134,9 +140,11 @@ function SendModal({show, handleClose, currency}) {
                 dataTxOutTwo
               );
               if (resultCreateTxOutTwo.status === 201) {
+                setBlockSend(false)
                 successSendCurrency();
                 handleClose();
               } else {
+                setBlockSend(false)
                 alertSendCurrency();
                 handleClose();
               }
@@ -144,14 +152,17 @@ function SendModal({show, handleClose, currency}) {
           }
         }
       }
+    } else {
+      setBlockSend(false)
     }
   };
 
   return (
-    <div className={showHideClassName}>
+    <div className={showHideClassName} >
       <div className="modal-background" onClick={handleClose} />
       <div className="modal-card">
         <form onSubmit={handleSubmit(onSubmit)} className="m-3">
+        <BlockUi blocking={blockSend} message="Sending, please wait...">
           <header className="modal-card-head">
             <p className="modal-card-title">Send Criptocurrency</p>
             <button
@@ -207,8 +218,9 @@ function SendModal({show, handleClose, currency}) {
               Cancel
             </button>
           </footer>
+          </BlockUi>
         </form>
-      </div>
+      </div> 
     </div>
   );
 }

@@ -20,11 +20,13 @@ function TransactionTable() {
   const [items, SetItem] = useState([])
   
   useEffect(() => {
-    InstanceAuth.get('transactions/').then((resp) => {
-      if (resp.status === 200) {
-        SetItem(resp.data.results);
-      }
-    });
+    async function fetchData() {
+       const resp = await InstanceAuth.get('transactions/');
+        if (resp.status === 200) {
+          SetItem(resp.data.results);
+        }
+    }
+    fetchData()
   },[]);
 
   return (
